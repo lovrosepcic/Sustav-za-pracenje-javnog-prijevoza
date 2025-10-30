@@ -7,8 +7,8 @@ public class Main {
     public static void main(String[] args) {
         Scanner unos = new Scanner(System.in);
 
-        // 1. UNOS PODATAKA ZA VOZACE (extends Osoba)
-        System.out.println("=== UNOS PODATAKA ZA VOZACE ===");
+
+        System.out.println(" UNOS PODATAKA ZA VOZACE ");
         Vozac[] vozaci = new Vozac[5];
 
         for (int i = 0; i < 5; i++) {
@@ -30,8 +30,8 @@ public class Main {
             vozaci[i] = new Vozac(ime, prezime, godine, brojDozvole);
         }
 
-        // 2. UNOS PODATAKA ZA VOZILA (Builder Pattern)
-        System.out.println("\n=== UNOS PODATAKA ZA VOZILA (Builder Pattern) ===");
+
+        System.out.println("\n UNOS PODATAKA ZA VOZILA (Builder Pattern) ");
         Vozilo[] vozila = new Vozilo[5];
 
         for (int i = 0; i < 5; i++) {
@@ -56,7 +56,7 @@ public class Main {
             System.out.print("Unesite trenutnu lokaciju: ");
             String lokacija = unos.nextLine();
 
-            // BUILDER PATTERN
+
             vozila[i] = new Vozilo.VoziloBuilder(registracija, model)
                     .brojSjedala(brojSjedala)
                     .godinaProizvodnje(godinaProizvodnje)
@@ -65,8 +65,8 @@ public class Main {
                     .build();
         }
 
-        // 3. UNOS PODATAKA ZA PUTNIKE (Record)
-        System.out.println("\n=== UNOS PODATAKA ZA PUTNIKE (Record) ===");
+
+        System.out.println("\n UNOS PODATAKA ZA PUTNIKE (Record) ");
         PutnikInfo[] putnici = new PutnikInfo[5];
 
         for (int i = 0; i < 5; i++) {
@@ -88,8 +88,8 @@ public class Main {
             putnici[i] = new PutnikInfo(ime, prezime, brojKarte, starost);
         }
 
-        // 4. UNOS PODATAKA ZA RUTE
-        System.out.println("\n=== UNOS PODATAKA ZA RUTE ===");
+
+        System.out.println("\n UNOS PODATAKA ZA RUTE ");
         Ruta[] rute = new Ruta[5];
 
         for (int i = 0; i < 5; i++) {
@@ -108,16 +108,16 @@ public class Main {
             rute[i] = new Ruta(brojLinije, pocetnaStanica, zavrsnaStanica, vozila[i], vozaci[i]);
         }
 
-        // 5. POLIMORFIZAM - Polje Osoba[] s Vozac i Putnik objektima
-        System.out.println("\n=== KREIRANJE POLJA ZA POLIMORFIZAM ===");
+
+        System.out.println("\n KREIRANJE POLJA ZA POLIMORFIZAM ");
         Osoba[] osobe = new Osoba[10];
 
-        // Prvih 5 - vozaci
+
         for (int i = 0; i < 5; i++) {
             osobe[i] = vozaci[i];
         }
 
-        // Drugih 5 - novi putnici
+
         for (int i = 0; i < 5; i++) {
             System.out.println("\nKreiram dodatnog putnika " + (i + 1) + ":");
             System.out.print("Ime: ");
@@ -133,7 +133,7 @@ public class Main {
             osobe[5 + i] = new Putnik(ime, prezime, godine, brojKarte);
         }
 
-        // GLAVNI IZBORNIK
+
         boolean nastaviPretragu = true;
 
         while (nastaviPretragu) {
@@ -255,7 +255,7 @@ public class Main {
                 }
 
             } else if (opcija == 7) {
-                // POLIMORFIZAM - min/max
+
                 System.out.println("\n=== POLIMORFIZAM - Najmladja i najstarija osoba ===");
 
                 int indeksNajmladje = 0;
@@ -281,7 +281,7 @@ public class Main {
                 osobe[indeksNajstarije].predstaviSe();
 
             } else if (opcija == 8) {
-                // Sucelje Odrzavanje
+
                 System.out.println("\n=== PROVJERA ODRZAVANJA ===");
                 for (int i = 0; i < 5; i++) {
                     System.out.println("\nVozilo: " + vozila[i].getModel());
@@ -294,7 +294,7 @@ public class Main {
                 }
 
             } else if (opcija == 9) {
-                // Record
+
                 System.out.println("\n=== DJECA PUTNICI (mladji od 18) ===");
                 for (int i = 0; i < 5; i++) {
                     if (putnici[i].jeDijete()) {
@@ -304,7 +304,7 @@ public class Main {
                 }
 
             } else if (opcija == 10) {
-                // Sucelje Pratljivo
+
                 System.out.println("\n=== LOKACIJE VOZILA ===");
                 for (int i = 0; i < 5; i++) {
                     System.out.println("Vozilo " + vozila[i].getModel() +

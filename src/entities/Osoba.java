@@ -1,6 +1,6 @@
 package entities;
 
-// APSTRAKTNA KLASA - nadklasa za Vozac
+
 public abstract class Osoba {
     private String ime;
     private String prezime;
@@ -36,6 +36,6 @@ public abstract class Osoba {
         this.godine = godine;
     }
 
-    // Apstraktna metoda
+
     public abstract void predstaviSe();
 }

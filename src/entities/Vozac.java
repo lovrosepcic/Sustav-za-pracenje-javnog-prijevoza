@@ -1,6 +1,6 @@
 package entities;
 
-// Vozac sada nasljeduje Osoba
+
 public class Vozac extends Osoba {
     private String brojDozvole;
 

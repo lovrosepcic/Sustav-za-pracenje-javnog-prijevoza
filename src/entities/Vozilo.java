@@ -1,6 +1,6 @@
 package entities;
 
-// Vozilo s Builder Pattern i implementacija sucelja
+
 public final class Vozilo implements Odrzavanje, Pratljivo {
     private String registracija;
     private String model;
@@ -9,7 +9,7 @@ public final class Vozilo implements Odrzavanje, Pratljivo {
     private int daniOdZadnjegOdrzavanja;
     private String trenutnaLokacija;
 
-    // Privatni konstruktor - koristi se samo kroz Builder
+
     private Vozilo(VoziloBuilder builder) {
         this.registracija = builder.registracija;
         this.model = builder.model;
@@ -51,7 +51,7 @@ public final class Vozilo implements Odrzavanje, Pratljivo {
         this.godinaProizvodnje = godinaProizvodnje;
     }
 
-    // Implementacija Odrzavanje
+
     @Override
     public void obavljajOdrzavanje() {
         this.daniOdZadnjegOdrzavanja = 0;
@@ -63,7 +63,7 @@ public final class Vozilo implements Odrzavanje, Pratljivo {
         return 90 - daniOdZadnjegOdrzavanja;
     }
 
-    // Implementacija Pratljivo
+
     @Override
     public String dohvatiLokaciju() {
         return trenutnaLokacija;
@@ -74,7 +74,7 @@ public final class Vozilo implements Odrzavanje, Pratljivo {
         this.trenutnaLokacija = lokacija;
     }
 
-    // BUILDER PATTERN
+
     public static class VoziloBuilder {
         private String registracija;
         private String model;

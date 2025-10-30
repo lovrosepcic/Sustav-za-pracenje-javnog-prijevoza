@@ -1,6 +1,6 @@
 package entities;
 
-// Putnik - jos jedna podklasa Osoba za polimorfizam
+
 public class Putnik extends Osoba {
     private String brojKarte;
 
