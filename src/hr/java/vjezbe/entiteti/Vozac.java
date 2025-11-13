@@ -1,4 +1,4 @@
-package entities;
+package hr.java.vjezbe.entiteti;
 
 /**
  * Klasa Vozac predstavlja vozača autobusa

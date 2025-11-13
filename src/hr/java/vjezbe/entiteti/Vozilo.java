@@ -1,4 +1,4 @@
-package entities;
+package hr.java.vjezbe.entiteti;
 
 /**
  * Klasa Vozilo predstavlja autobus sa svim relevantnim informacijama

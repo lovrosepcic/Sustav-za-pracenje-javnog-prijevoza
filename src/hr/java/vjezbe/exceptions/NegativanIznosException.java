@@ -1,4 +1,4 @@
-package exceptions;
+package hr.java.vjezbe.exceptions;
 
 public class NegativanIznosException extends RuntimeException {
     public NegativanIznosException(String message) {

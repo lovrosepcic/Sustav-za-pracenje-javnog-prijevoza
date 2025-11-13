@@ -1,4 +1,4 @@
-package exceptions;
+package hr.java.vjezbe.exceptions;
 
 /**
  * Prilagođena checked iznimka za neispravne podatke o vozaču

@@ -1,4 +1,4 @@
-package entities;
+package hr.java.vjezbe.entiteti;
 
 /**
  * Sučelje za praćenje lokacija objekta

@@ -1,4 +1,4 @@
-package entities;
+package hr.java.vjezbe.entiteti;
 
 /**
  * Klasa Putnik predstavlja putnika u autobusu

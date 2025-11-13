@@ -1,4 +1,4 @@
-package entities;
+package hr.java.vjezbe.entiteti;
 
 /**
  * Apstraktna klasa koja predstavlja osobu u sustavu javnog prijevoza
