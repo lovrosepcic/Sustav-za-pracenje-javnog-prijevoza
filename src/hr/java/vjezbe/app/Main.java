@@ -1,4 +1,5 @@
 package hr.java.vjezbe.app;
+
 import hr.java.vjezbe.entiteti.*;
 import hr.java.vjezbe.exceptions.*;
 import org.slf4j.Logger;
@@ -9,13 +10,12 @@ import java.util.stream.Collectors;
 
 /**
  * Glavna klasa aplikacije za upravljanje autobusnim prijevozom
+ * Peta laboratorijska vježba - Lambda izrazi, Optional, Generici
  */
 public class Main {
-
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
     private static final Scanner scanner = new Scanner(System.in);
 
-    // Kolekcije umjesto polja
     private static List<Vozilo> vozila = new ArrayList<>();
     private static List<Vozac> vozaci = new ArrayList<>();
     private static List<Putnik> putnici = new ArrayList<>();
@@ -24,61 +24,37 @@ public class Main {
     public static void main(String[] args) {
         logger.info("Pokretanje aplikacije...");
 
-        // Unos testnih podataka
         ucitajTestnePodatke();
 
-        // Glavni izbornik
         int izbor;
         do {
             prikaziIzbornik();
             izbor = scanner.nextInt();
-            scanner.nextLine(); // Čisti buffer
+            scanner.nextLine();
 
             switch (izbor) {
-                case 1:
-                    prikaziSvaVozila();
-                    break;
-                case 2:
-                    prikaziSveVozace();
-                    break;
-                case 3:
-                    prikaziSvePutnike();
-                    break;
-                case 4:
-                    prikaziSveRute();
-                    break;
-                case 5:
-                    sortirajVozila();
-                    break;
-                case 6:
-                    sortirajVozace();
-                    break;
-                case 7:
-                    filtrirajPutnike();
-                    break;
-                case 8:
-                    grupirajRutePoPolazistima();
-                    break;
-                case 9:
-                    particionirajVozilaPoGodini();
-                    break;
-                case 0:
-                    logger.info("Izlaz iz aplikacije.");
-                    System.out.println("Doviđenja!");
-                    break;
-                default:
-                    System.out.println("Nepoznata opcija!");
+                case 1 -> prikaziSvaVozila();
+                case 2 -> prikaziSveVozace();
+                case 3 -> prikaziSvePutnike();
+                case 4 -> prikaziSveRute();
+                case 5 -> sortirajVozila();
+                case 6 -> sortirajVozace();
+                case 7 -> filtrirajPutnike();
+                case 8 -> grupirajRutePoPolazistima();
+                case 9 -> particionirajVozilaPoGodini();
+                case 10 -> pronađiNajstarijevoziluOptional();
+                case 11 -> mapiranjePutnikaNaInfo();
+                case 12 -> reducirajVozilaPoGodini();
+                case 0 -> logger.info("Izlaz iz aplikacije.");
+                default -> System.out.println("Nepoznata opcija!");
             }
         } while (izbor != 0);
 
         scanner.close();
     }
 
-    /**
-     * Prikazuje glavni izbornik
-     */
     private static void prikaziIzbornik() {
-        System.out.println("\n=== AUTOBUSNI PRIJEVOZ - GLAVNI IZBORNIK ===");
+        System.out.println("\n=== AUTOBUSNI PRIJEVOZ - V5 (Lambda, Optional, Generici) ===");
         System.out.println("1. Prikaži sva vozila");
         System.out.println("2. Prikaži sve vozače");
         System.out.println("3. Prikaži sve putnike");
@@ -87,16 +63,16 @@ public class Main {
         System.out.println("6. Sortiraj vozače");
         System.out.println("7. Filtriraj putnike po godinama");
         System.out.println("8. Grupiraj rute po polazištima");
-        System.out.println("9. Particioniraj vozila po godini proizvodnje");
+        System.out.println("9. Particioniraj vozila po godini");
+        System.out.println("10. Pronađi najstarije vozilo (Optional)");
+        System.out.println("11. Mapiraj putnike u PutnikInfo (Stream API)");
+        System.out.println("12. Reduciraj vozila po godini");
         System.out.println("0. Izlaz");
         System.out.print("Odabir: ");
     }
 
-    /**
-     * Učitava testne podatke u kolekcije
-     */
     private static void ucitajTestnePodatke() {
-        // Kreiranje vozila
+        // Vozila
         Vozilo v1 = new Vozilo.VoziloBuilder("ZG-1234-AB", "Mercedes Tourismo")
                 .brojSjedala(50)
                 .godinaProizvodnje(2020)
@@ -119,18 +95,19 @@ public class Main {
         vozila.add(v2);
         vozila.add(v3);
 
-        // Kreiranje vozača
+        // Vozači
         vozaci.add(new Vozac("Ivan", "Horvat", 45, "VD-123456"));
         vozaci.add(new Vozac("Marko", "Kovačević", 38, "VD-234567"));
         vozaci.add(new Vozac("Ana", "Perić", 42, "VD-345678"));
 
-        // Kreiranje putnika
+        // Putnici
         putnici.add(new Putnik("Petra", "Jurić", 25, "K-00123"));
         putnici.add(new Putnik("Luka", "Babić", 30, "K-00456"));
         putnici.add(new Putnik("Marta", "Novak", 22, "K-00789"));
         putnici.add(new Putnik("Ivana", "Marić", 28, "K-00321"));
+        putnici.add(new Putnik("Jovan", "Jovanović", 17, "K-00654"));
 
-        // Kreiranje ruta
+        // Rute
         Ruta r1 = new Ruta("Zagreb", "Split", 380.0);
         r1.dodajVozaca(vozaci.get(0));
         r1.dodajPutnika(putnici.get(0));
@@ -144,59 +121,43 @@ public class Main {
         r3.dodajVozaca(vozaci.get(2));
         r3.dodajPutnika(putnici.get(3));
 
+        Ruta r4 = new Ruta("Zagreb", "Osijek", 340.0);
+        r4.dodajVozaca(vozaci.get(0));
+        r4.dodajPutnika(putnici.get(4));
+
         rute.add(r1);
         rute.add(r2);
         rute.add(r3);
+        rute.add(r4);
 
         logger.info("Učitano {} vozila, {} vozača, {} putnika, {} rute",
                 vozila.size(), vozaci.size(), putnici.size(), rute.size());
     }
 
-    /**
-     * Prikazuje sva vozila
-     */
+    // ===== PRIKAZ METODE =====
     private static void prikaziSvaVozila() {
         System.out.println("\n--- SVA VOZILA ---");
-        for (Vozilo v : vozila) {
-            System.out.println(v.getModel() + " (" + v.getRegistracija() + ") - "
-                    + v.getBrojSjedala() + " sjedala, godina: " + v.getGodinaProizvodnje());
-        }
+        vozila.forEach(v -> System.out.println(v.getModel() + " (" + v.getRegistracija() +
+                ") - " + v.getBrojSjedala() + " sjedala, godina: " + v.getGodinaProizvodnje()));
     }
 
-    /**
-     * Prikazuje sve vozače
-     */
     private static void prikaziSveVozace() {
         System.out.println("\n--- SVI VOZAČI ---");
-        for (Vozac v : vozaci) {
-            v.predstaviSe();
-        }
+        vozaci.forEach(Vozac::predstaviSe);
     }
 
-    /**
-     * Prikazuje sve putnike
-     */
     private static void prikaziSvePutnike() {
         System.out.println("\n--- SVI PUTNICI ---");
-        for (Putnik p : putnici) {
-            p.predstaviSe();
-        }
+        putnici.forEach(Putnik::predstaviSe);
     }
 
-    /**
-     * Prikazuje sve rute
-     */
     private static void prikaziSveRute() {
         System.out.println("\n--- SVE RUTE ---");
-        for (Ruta r : rute) {
-            System.out.println(r.getPolaziste() + " -> " + r.getOdrediste()
-                    + " (" + r.getUdaljenost() + " km) - Putnika: " + r.getBrojPutnika());
-        }
+        rute.forEach(r -> System.out.println(r.getPolaziste() + " -> " + r.getOdrediste() +
+                " (" + r.getUdaljenost() + " km) - Putnika: " + r.getBrojPutnika()));
     }
 
-    /**
-     * Sortira vozila - primjer Comparatora
-     */
+
     private static void sortirajVozila() {
         System.out.println("\n1. Po broju sjedala (uzlazno)");
         System.out.println("2. Po godini proizvodnje (silazno)");
@@ -204,87 +165,150 @@ public class Main {
         int opcija = scanner.nextInt();
 
         if (opcija == 1) {
-            // Sortiranje po broju sjedala - lambda izraz
+            // Lambda izraz - sortiranje po broju sjedala
             vozila.sort((v1, v2) -> Integer.compare(v1.getBrojSjedala(), v2.getBrojSjedala()));
-            // Ili s Comparator.comparingInt
-            // vozila.sort(Comparator.comparingInt(Vozilo::getBrojSjedala));
         } else if (opcija == 2) {
-            // Sortiranje po godini - silazno
+            // Comparator s method reference - silazno
             vozila.sort(Comparator.comparingInt(Vozilo::getGodinaProizvodnje).reversed());
         }
 
         System.out.println("\n--- SORTIRANA VOZILA ---");
-        for (Vozilo v : vozila) {
-            System.out.println(v.getModel() + " - " + v.getBrojSjedala() + " sjedala, "
-                    + v.getGodinaProizvodnje() + " god.");
-        }
+        vozila.forEach(v -> System.out.println(v.getModel() + " - " + v.getBrojSjedala() +
+                " sjedala, " + v.getGodinaProizvodnje() + " god."));
     }
 
-    /**
-     * Sortira vozače - primjer višekriterijskog sortiranja
-     */
     private static void sortirajVozace() {
-        // Sortiranje prvo po godinama, pa po prezimenu
+        // Višekriterijsko sortiranje - prvo po godinama, pa po prezimenu
         vozaci.sort(Comparator.comparingInt(Vozac::getGodine)
                 .thenComparing(Vozac::getPrezime));
 
         System.out.println("\n--- SORTIRANI VOZAČI (godine pa prezime) ---");
-        for (Vozac v : vozaci) {
-            v.predstaviSe();
-        }
+        vozaci.forEach(Vozac::predstaviSe);
     }
 
-    /**
-     * Filtrira putnike po godinama - Stream API
-     */
+
     private static void filtrirajPutnike() {
         System.out.print("Unesite minimalnu dob: ");
         int minDob = scanner.nextInt();
 
-        // Stream API - filter
+        // Stream API - filter s lambda izrazom
         List<Putnik> filtrirani = putnici.stream()
                 .filter(p -> p.getGodine() >= minDob)
                 .collect(Collectors.toList());
 
         System.out.println("\n--- PUTNICI STARIJI OD " + minDob + " GODINA ---");
-        for (Putnik p : filtrirani) {
-            p.predstaviSe();
-        }
+        filtrirani.forEach(Putnik::predstaviSe);
     }
 
-    /**
-     * Grupira rute po polazištima - Collectors.groupingBy
-     */
+
     private static void grupirajRutePoPolazistima() {
-        // Collectors.groupingBy
+        // Collectors.groupingBy - immutable pristup
         Map<String, List<Ruta>> grupirano = rute.stream()
                 .collect(Collectors.groupingBy(Ruta::getPolaziste));
 
         System.out.println("\n--- RUTE GRUPIRANE PO POLAZIŠTIMA ---");
-        for (Map.Entry<String, List<Ruta>> entry : grupirano.entrySet()) {
-            System.out.println("\nPolazište: " + entry.getKey());
-            for (Ruta r : entry.getValue()) {
-                System.out.println("  -> " + r.getOdrediste() + " (" + r.getUdaljenost() + " km)");
-            }
-        }
+        grupirano.forEach((polaziste, ruteListe) -> {
+            System.out.println("\nPolazište: " + polaziste);
+            ruteListe.forEach(r -> System.out.println(" -> " + r.getOdrediste() +
+                    " (" + r.getUdaljenost() + " km)"));
+        });
     }
 
-    /**
-     * Particionira vozila po godini - Collectors.partitioningBy
-     */
+
     private static void particionirajVozilaPoGodini() {
         // Particioniranje - nova (>=2020) vs stara vozila
         Map<Boolean, List<Vozilo>> particionirano = vozila.stream()
                 .collect(Collectors.partitioningBy(v -> v.getGodinaProizvodnje() >= 2020));
 
         System.out.println("\n--- NOVA VOZILA (2020+) ---");
-        for (Vozilo v : particionirano.get(true)) {
-            System.out.println(v.getModel() + " - " + v.getGodinaProizvodnje());
-        }
+        particionirano.get(true).forEach(v -> System.out.println(v.getModel() +
+                " - " + v.getGodinaProizvodnje()));
 
         System.out.println("\n--- STARIJA VOZILA ---");
-        for (Vozilo v : particionirano.get(false)) {
-            System.out.println(v.getModel() + " - " + v.getGodinaProizvodnje());
+        particionirano.get(false).forEach(v -> System.out.println(v.getModel() +
+                " - " + v.getGodinaProizvodnje()));
+    }
+
+
+    private static void pronađiNajstarijevoziluOptional() {
+        // Optional - sigurna obrada null vrijednosti
+        Optional<Vozilo> najstarijeVozilo = vozila.stream()
+                .min(Comparator.comparingInt(Vozilo::getGodinaProizvodnje));
+
+        System.out.println("\n--- NAJSTARIJE VOZILO (Optional) ---");
+
+        // ifPresentOrElse - lambda izrazi za obje grane
+        najstarijeVozilo.ifPresentOrElse(
+                v -> System.out.println("Pronađeno: " + v.getModel() + " - " + v.getGodinaProizvodnje()),
+                () -> System.out.println("Nema vozila u bazi!")
+        );
+
+        // Alternativa - ifPresent
+        if (najstarijeVozilo.isPresent()) {
+            Vozilo v = najstarijeVozilo.get();
+            System.out.println("Alternativa - vozilo: " + v.getRegistracija());
         }
+    }
+
+
+    private static void mapiranjePutnikaNaInfo() {
+        System.out.println("\n--- MAPIRANJE PUTNIKA U PutnikInfo (Stream API) ---");
+
+        // Map - transformacija Putnik -> PutnikInfo
+        List<PutnikInfo> putnikInfos = putnici.stream()
+                .map(p -> new PutnikInfo(p.getIme(), p.getPrezime(),
+                        p.getBrojKarte(), p.getGodine()))
+                .collect(Collectors.toList());
+
+        putnikInfos.forEach(info -> System.out.println(info.ime() + " " + info.prezime() +
+                " (" + info.starost() + ") - Karta: " + info.brojKarte()));
+
+        // Dodatni primjer - samo imena
+        System.out.println("\n--- SAMO IMENA PUTNIKA (Map) ---");
+        putnici.stream()
+                .map(Putnik::getIme)
+                .forEach(System.out::println);
+
+        // Dodatni primjer - prosječna starost
+        double prosjecnaStarost = putnici.stream()
+                .mapToInt(Putnik::getGodine)
+                .average()
+                .orElse(0.0);
+
+        System.out.println("\nProsječna starost putnika: " + prosjecnaStarost);
+    }
+
+
+    private static void reducirajVozilaPoGodini() {
+        System.out.println("\n--- REDUCIRANJE VOZILA PO GODINI PROIZVODNJE ---");
+
+        // Reduce - suma godina proizvodnje
+        Optional<Integer> sumGodina = vozila.stream()
+                .map(Vozilo::getGodinaProizvodnje)
+                .reduce(Integer::sum);
+
+        sumGodina.ifPresent(suma -> System.out.println("Suma godina: " + suma));
+
+        // Reduce s initialnom vrijednosti
+        Integer sumGodina2 = vozila.stream()
+                .map(Vozilo::getGodinaProizvodnje)
+                .reduce(0, Integer::sum);
+
+        System.out.println("Suma godina (s 0): " + sumGodina2);
+
+        // Prosječna godina proizvodnje
+        double prosjecnaGodina = vozila.stream()
+                .mapToInt(Vozilo::getGodinaProizvodnje)
+                .average()
+                .orElse(0.0);
+
+        System.out.println("Prosječna godina proizvodnje: " + prosjecnaGodina);
+
+        // Najnovija godina
+        Optional<Integer> najnovijaGodina = vozila.stream()
+                .map(Vozilo::getGodinaProizvodnje)
+                .max(Integer::compare);
+
+        najnovijaGodina.ifPresent(godina -> System.out.println("Najnovija godina: " + godina));
     }
 }
