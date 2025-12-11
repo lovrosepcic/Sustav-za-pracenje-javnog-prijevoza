@@ -1,5 +1,5 @@
 package hr.java.vjezbe.entiteti;
-
+import java.io.Serializable;
 /**
  * Klasa Vozilo predstavlja autobus sa svim relevantnim informacijama
  * Koristi Builder Pattern za jednostavnije kreiranje objekata
@@ -8,13 +8,18 @@ package hr.java.vjezbe.entiteti;
  * @author Student
  * @version 2.0
  */
-public final class Vozilo implements Odrzavanje, Pratljivo {
+public final class Vozilo implements Odrzavanje, Pratljivo, Serializable {
+    private static final long serialVersionUID = 2L;
     private String registracija;
     private String model;
     private int brojSjedala;
     private int godinaProizvodnje;
     private int daniOdZadnjegOdrzavanja;
     private String trenutnaLokacija;
+
+    public static VoziloBuilder defaultBuilder() {
+        return new VoziloBuilder("", "");
+    }
 
     /**
      * Privatni konstruktor - koristi se samo kroz Builder

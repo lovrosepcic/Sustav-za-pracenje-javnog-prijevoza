@@ -7,8 +7,17 @@ package hr.java.vjezbe.entiteti;
  * @author Student
  * @version 2.0
  */
-public class Vozac extends Osoba {
+public class Vozac extends Osoba implements java.io.Serializable {
+    private static final long serialVersionUID = 2L;
     private String brojDozvole;
+
+    /**
+     * Default konstruktor za serializaciju
+     */
+    public Vozac() {
+        super("", "", 0);
+        this.brojDozvole = "";
+    }
 
     /**
      * Konstruktor za inicijalizaciju vozača

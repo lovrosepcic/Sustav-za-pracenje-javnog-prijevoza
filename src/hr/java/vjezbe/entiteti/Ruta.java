@@ -1,5 +1,6 @@
 package hr.java.vjezbe.entiteti;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,12 +10,21 @@ import java.util.List;
  * @author Student
  * @version 4.0
  */
-public class Ruta {
+public class Ruta implements Serializable {
+    private static final long serialVersionUID = 2L;
     private String polaziste;
     private String odrediste;
     private double udaljenost;
     private List<Vozac> vozaci;
     private List<Putnik> putnici;
+
+    public Ruta() {
+        this.polaziste = "";
+        this.odrediste = "";
+        this.udaljenost = 0.0;
+        this.vozaci = new ArrayList<>();
+        this.putnici = new ArrayList<>();
+    }
 
     /**
      * Konstruktor za inicijalizaciju rute

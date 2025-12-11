@@ -1,5 +1,7 @@
 package hr.java.vjezbe.entiteti;
 
+import java.io.Serializable;
+
 /**
  * Klasa Putnik predstavlja putnika u autobusu
  * Nasljeđuje apstraktnu klasu Osoba
@@ -7,9 +9,14 @@ package hr.java.vjezbe.entiteti;
  * @author Student
  * @version 2.0
  */
-public class Putnik extends Osoba {
+public class Putnik extends Osoba implements Serializable {
+    private static final long serialVersionUID = 2L;
     private String brojKarte;
 
+    public Putnik() {
+        super("", "", 0);
+        this.brojKarte = "";
+    }
     /**
      * Konstruktor za inicijalizaciju putnika
      *
