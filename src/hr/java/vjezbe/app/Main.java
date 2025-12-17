@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 
 /**
  * Glavna klasa aplikacije za upravljanje autobusnim prijevozom
- * Peta laboratorijska vježba - Lambda izrazi, Optional, Generici
  */
 public class Main {
     private static final String VOZILA_JSON = "vozila.json";
